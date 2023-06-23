@@ -4,8 +4,10 @@ const { authService, userService, tokenService } = require('../services');
 
 const register = catchAsync(async (req, res) => {
   const user = await userService.createUser(req.body);
-  const tokens = await tokenService.generateAuthTokens(user);
-  res.status(httpStatus.CREATED).send({ user, tokens });
+  // Add email service to send a verification email in order to verify it
+  // For now sending the Email verification token into the response
+  const emailVerificationToken = await tokenService.generateVerifyEmailToken(user);
+  res.status(httpStatus.CREATED).send({ emailVerificationToken });
 });
 
 const login = catchAsync(async (req, res) => {
