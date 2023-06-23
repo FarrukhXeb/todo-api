@@ -17,8 +17,12 @@ module.exports = {
         allowNull: false,
       },
       status: {
-        type: Sequelize.BOOLEAN,
-        defaultValue: false,
+        type: Sequelize.ENUM('complete', 'incomplete', 'in-progress'),
+        defaultValue: 'incomplete',
+      },
+      dueDate: {
+        type: Sequelize.DATE,
+        allowNull: false,
       },
       userId: {
         type: Sequelize.INTEGER,

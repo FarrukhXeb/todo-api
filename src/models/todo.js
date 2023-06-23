@@ -20,8 +20,12 @@ module.exports = (sequelize, DataTypes) => {
         allowNull: false,
       },
       status: {
-        type: DataTypes.BOOLEAN,
-        defaultValue: false,
+        type: DataTypes.ENUM('complete', 'incomplete', 'in-progress'),
+        defaultValue: 'incomplete',
+      },
+      dueDate: {
+        type: DataTypes.DATE,
+        allowNull: false,
       },
     },
     {

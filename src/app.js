@@ -35,7 +35,7 @@ app.options('*', cors());
 app.use(passport.initialize());
 passport.use('jwt', jwtStrategy);
 
-// v1 api routes
+// api routes
 app.use('/api', routes);
 
 // send back a 404 error for any unknown api request
