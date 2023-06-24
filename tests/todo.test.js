@@ -154,6 +154,47 @@ describe('Todo routes', () => {
     });
   });
 
+  describe('GET /:id/similar-todos', () => {
+    let todo1;
+    let todo2;
+    beforeAll(() => {
+      todo1 = {
+        title: 'Some title',
+        description: 'This is a description of the first todo',
+        dueDate: faker.date.future().toISOString(),
+      };
+      todo2 = {
+        title: 'Another title for testing',
+        description: 'This is a description',
+        dueDate: faker.date.future().toISOString(),
+      };
+    });
+    test('should return 201 when creating 2 similar todos', async () => {
+      const res1 = await request(app)
+        .post('/api/todos')
+        .set('Authorization', `Bearer ${accessToken}`)
+        .send(todo1)
+        .expect(httpStatus.CREATED);
+      todo1 = res1.body;
+
+      const res2 = await request(app)
+        .post('/api/todos')
+        .set('Authorization', `Bearer ${accessToken}`)
+        .send(todo2)
+        .expect(httpStatus.CREATED);
+      todo2 = res2.body;
+    });
+
+    test('should return 200 when fetching similar todos', async () => {
+      const res = await request(app)
+        .get(`/api/todos/${todo1.id}/similar-todos`)
+        .set('Authorization', `Bearer ${accessToken}`)
+        .expect(httpStatus.OK);
+
+      expect(res.body).toBeDefined();
+    });
+  });
+
   afterAll(async () => {
     // After going through all the test remove the user
     await userService.deleteUserById(user.id);

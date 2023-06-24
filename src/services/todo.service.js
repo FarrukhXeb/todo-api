@@ -78,6 +78,22 @@ const getOverdueTodosByUser = async (userId) => {
   return overdueCount;
 };
 
+const findSimilarTodo = async (todoId, userId) => {
+  const todo = await getUserTodoById(todoId, userId);
+  const { title, description } = todo;
+
+  // Find similar tasks
+  const similarTasks = await Todo.findAll({
+    where: {
+      [Op.or]: [{ title: { [Op.like]: `%${title}%` } }, { description: { [Op.like]: `%${description}%` } }],
+      id: {
+        [Op.ne]: todoId,
+      },
+    },
+  });
+  return similarTasks;
+};
+
 module.exports = {
   createTodo,
   getUserTodos,
@@ -87,4 +103,5 @@ module.exports = {
   getUserTodosByStatusCount,
   getAverageTodoCompletedByUser,
   getOverdueTodosByUser,
+  findSimilarTodo,
 };

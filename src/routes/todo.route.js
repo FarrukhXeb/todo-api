@@ -15,5 +15,7 @@ router.delete('/:id', auth, todoController.deleteUserTodo);
 router.get('/report/satus-count', auth, todoController.getUserTodosByStatusCount);
 router.get('/report/avg-completed', auth, todoController.getAverageTodoCompleted);
 router.get('/report/overdue-count', auth, todoController.getOverdueTodos);
+// Algorithm
+router.get('/:id/similar-todos', auth, todoController.getSimilarTodos);
 
 module.exports = router;

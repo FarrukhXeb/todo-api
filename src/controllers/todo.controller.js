@@ -42,6 +42,11 @@ const getOverdueTodos = catchAsync(async (req, res) => {
   res.status(httpStatus.OK).send({ overdueCount });
 });
 
+const getSimilarTodos = catchAsync(async (req, res) => {
+  const todos = await todoService.findSimilarTodo(req.params.id, req.user.id);
+  res.status(httpStatus.OK).send(todos);
+});
+
 module.exports = {
   create,
   getAllUserTodos,
@@ -51,4 +56,5 @@ module.exports = {
   getAverageTodoCompleted,
   getOverdueTodos,
   deleteUserTodo,
+  getSimilarTodos,
 };
