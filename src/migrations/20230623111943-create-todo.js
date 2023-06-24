@@ -28,6 +28,7 @@ module.exports = {
         type: Sequelize.INTEGER,
         allowNull: false,
         field: 'user_id',
+        onDelete: 'CASCADE',
         references: {
           model: {
             tableName: 'Users',
@@ -38,10 +39,12 @@ module.exports = {
       createdAt: {
         allowNull: false,
         type: Sequelize.DATE,
+        defaultValue: new Date(),
       },
       updatedAt: {
         allowNull: false,
         type: Sequelize.DATE,
+        defaultValue: new Date(),
       },
     });
   },

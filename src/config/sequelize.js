@@ -13,4 +13,5 @@ module.exports = {
   define: {
     timestamps: true,
   },
+  logging: config.env === 'development',
 };

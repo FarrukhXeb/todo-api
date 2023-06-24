@@ -2,12 +2,17 @@ const httpStatus = require('http-status');
 const { Todo } = require('../models');
 const ApiError = require('../utils/ApiError');
 
-const createTodo = (todoBody, userId) => {
-  return Todo.create({ ...todoBody, user_id: userId });
-};
-
 const getUserTodos = (userId) => {
   return Todo.findAll({ where: { user_id: userId } });
+};
+
+const createTodo = async (todoBody, userId) => {
+  // Check if the user can add a new task
+  const todos = await getUserTodos(userId);
+  const today = new Date().toLocaleDateString();
+  const count = todos.filter((todo) => new Date(todo.createdAt).toLocaleDateString() === today).length;
+  if (count > 50) throw new ApiError(httpStatus.BAD_GATEWAY, 'You have reached the maximum limit of tasks for today.');
+  return Todo.create({ ...todoBody, user_id: userId });
 };
 
 const getUserTodoById = async (todoId, userId) => {

@@ -4,17 +4,17 @@ const { todoService } = require('../services');
 
 const create = catchAsync(async (req, res) => {
   const todo = await todoService.createTodo(req.body, req.user.id);
-  res.status(httpStatus.CREATED).send({ todo });
+  res.status(httpStatus.CREATED).send(todo);
 });
 
 const getAllUserTodos = catchAsync(async (req, res) => {
-  const todo = await todoService.getUserTodos(req.user.id);
-  res.status(httpStatus.OK).send({ todo });
+  const todos = await todoService.getUserTodos(req.user.id);
+  res.status(httpStatus.OK).send(todos);
 });
 
 const getTodoById = catchAsync(async (req, res) => {
   const todo = await todoService.getUserTodoById(req.params.id, req.user.id);
-  res.status(httpStatus.OK).send({ todo });
+  res.status(httpStatus.OK).send(todo);
 });
 
 const updateUserTodoById = catchAsync(async (req, res) => {
