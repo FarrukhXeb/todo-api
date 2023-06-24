@@ -3,6 +3,7 @@ const moment = require('moment');
 const { faker } = require('@faker-js/faker');
 const httpStatus = require('http-status');
 const app = require('../src/app');
+const { Todo } = require('../src/models');
 const { tokenService, userService, todoService } = require('../src/services');
 const config = require('../src/config/config');
 const { tokenTypes } = require('../src/config/tokens');
@@ -134,6 +135,22 @@ describe('Todo routes', () => {
       const updatedTodo = await todoService.getUserTodoById(newTodo.id, user.id);
 
       expect(updatedTodo.status).toBe(updatedBody.status);
+    });
+  });
+
+  describe('DELETE /api/todos/:id', () => {
+    test('should return 401 when deleting a token without authentication', async () => {
+      await request(app).delete(`/api/todos/${newTodo.id}`).send().expect(httpStatus.UNAUTHORIZED);
+    });
+
+    test('should return 204 when deleting a todo', async () => {
+      await request(app)
+        .delete(`/api/todos/${newTodo.id}`)
+        .set('Authorization', `Bearer ${accessToken}`)
+        .send()
+        .expect(httpStatus.NO_CONTENT);
+      const dbTodo = await Todo.findByPk(newTodo.id);
+      expect(dbTodo).toBeNull();
     });
   });
 

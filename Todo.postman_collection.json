@@ -824,7 +824,7 @@
 					"request": {
 						"method": "GET",
 						"header": [],
-						"url": "{{BASE_URL}}/todos/51"
+						"url": "{{BASE_URL}}/todos/7"
 					},
 					"response": []
 				},
@@ -843,6 +843,15 @@
 							}
 						},
 						"url": "{{BASE_URL}}/todos/51"
+					},
+					"response": []
+				},
+				{
+					"name": "Delete todo",
+					"request": {
+						"method": "DELETE",
+						"header": [],
+						"url": "{{BASE_URL}}/todos/7"
 					},
 					"response": []
 				}

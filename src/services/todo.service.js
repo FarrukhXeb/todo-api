@@ -31,6 +31,11 @@ const updateTodoById = async (todoId, userId, updateBody) => {
   return todo;
 };
 
+const deleteUserTodo = async (todoId, userId) => {
+  const todo = await getUserTodoById(todoId, userId);
+  await todo.destroy();
+};
+
 const getUserTodosByStatusCount = async (userId) => {
   const incompleteCount = await Todo.count({ where: { status: 'incomplete', user_id: userId } });
   const inProgressCount = await Todo.count({ where: { status: 'in-progress', user_id: userId } });
@@ -78,6 +83,7 @@ module.exports = {
   getUserTodos,
   getUserTodoById,
   updateTodoById,
+  deleteUserTodo,
   getUserTodosByStatusCount,
   getAverageTodoCompletedByUser,
   getOverdueTodosByUser,
