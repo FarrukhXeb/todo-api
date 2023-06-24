@@ -12,7 +12,7 @@ const createTodo = async (todoBody, userId) => {
   const todos = await getUserTodos(userId);
   const today = new Date().toLocaleDateString();
   const count = todos.filter((todo) => new Date(todo.createdAt).toLocaleDateString() === today).length;
-  if (count > 50) throw new ApiError(httpStatus.BAD_GATEWAY, 'You have reached the maximum limit of tasks for today.');
+  if (count > 50) throw new ApiError(httpStatus.BAD_REQUEST, 'You have reached the maximum limit of tasks for today.');
   return Todo.create({ ...todoBody, user_id: userId });
 };
 

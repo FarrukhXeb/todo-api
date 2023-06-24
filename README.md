@@ -15,8 +15,14 @@ yarn db:seed # seeding the DB with custom data
 ```
 Create a `.env` file in the root directory and add the environment variables just like given in the `.env.example` file.
 
+To drop the database use
+```
+yarn db:drop
+```
+
 ## Testing
 Using `jest` and `supertest` for testing the API(s)
 ```
 yarn test
 ```
+**There is a postman collection where you can test the endpoints**
