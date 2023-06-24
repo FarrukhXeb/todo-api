@@ -22,9 +22,27 @@ const updateUserTodoById = catchAsync(async (req, res) => {
   res.status(httpStatus.NO_CONTENT).send();
 });
 
+const getUserTodosByStatusCount = catchAsync(async (req, res) => {
+  const todos = await todoService.getUserTodosByStatusCount(req.user.id);
+  res.status(httpStatus.OK).send(todos);
+});
+
+const getAverageTodoCompleted = catchAsync(async (req, res) => {
+  const averageCount = await todoService.getAverageTodoCompletedByUser(req.user.id);
+  res.status(httpStatus.OK).send({ averageCount });
+});
+
+const getOverdueTodos = catchAsync(async (req, res) => {
+  const overdueCount = await todoService.getOverdueTodosByUser(req.user.id);
+  res.status(httpStatus.OK).send({ overdueCount });
+});
+
 module.exports = {
   create,
   getAllUserTodos,
   getTodoById,
   updateUserTodoById,
+  getUserTodosByStatusCount,
+  getAverageTodoCompleted,
+  getOverdueTodos,
 };

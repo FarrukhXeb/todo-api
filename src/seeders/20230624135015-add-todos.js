@@ -11,8 +11,9 @@ module.exports = {
       const seedData = {
         title: faker.lorem.lines(1),
         description: faker.lorem.paragraph(2),
-        dueDate: faker.date.future(),
+        dueDate: faker.date.anytime(),
         user_id: faker.helpers.arrayElement(userIds),
+        status: faker.helpers.arrayElement(['complete', 'incomplete', 'in-progress']),
       };
       data.push(seedData);
     }

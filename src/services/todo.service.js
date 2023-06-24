@@ -1,5 +1,6 @@
 const httpStatus = require('http-status');
-const { Todo } = require('../models');
+const { Op } = require('sequelize');
+const { Todo, User } = require('../models');
 const ApiError = require('../utils/ApiError');
 
 const getUserTodos = (userId) => {
@@ -30,9 +31,54 @@ const updateTodoById = async (todoId, userId, updateBody) => {
   return todo;
 };
 
+const getUserTodosByStatusCount = async (userId) => {
+  const incompleteCount = await Todo.count({ where: { status: 'incomplete', user_id: userId } });
+  const inProgressCount = await Todo.count({ where: { status: 'in-progress', user_id: userId } });
+  const completeCount = await Todo.count({ where: { status: 'complete', user_id: userId } });
+  const totalCount = await Todo.count({ where: { user_id: userId } });
+
+  return { incompleteCount, inProgressCount, completeCount, totalCount };
+};
+
+const getAverageTodoCompletedByUser = async (userId) => {
+  const { createdAt } = await User.findByPk(userId);
+  // Calculate the number of days since account creation
+  const millisecondsPerDay = 24 * 60 * 60 * 1000; // Number of milliseconds in a day
+  const currentDate = new Date();
+  const daysElapsed = Math.floor((currentDate - createdAt) / millisecondsPerDay) + 1;
+
+  // Calculate the total number of completed tasks
+  const completedCount = await Todo.count({
+    where: {
+      user_id: userId,
+      status: 'complete',
+    },
+  });
+
+  // Calculate the average tasks completed per day
+  return completedCount / daysElapsed;
+};
+
+const getOverdueTodosByUser = async (userId) => {
+  const currentDate = new Date();
+  const overdueCount = await Todo.count({
+    where: {
+      dueDate: {
+        [Op.lt]: currentDate,
+      },
+      status: 'incomplete',
+      user_id: userId,
+    },
+  });
+  return overdueCount;
+};
+
 module.exports = {
   createTodo,
   getUserTodos,
   getUserTodoById,
   updateTodoById,
+  getUserTodosByStatusCount,
+  getAverageTodoCompletedByUser,
+  getOverdueTodosByUser,
 };
