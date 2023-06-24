@@ -1,4 +1,5 @@
 const config = require('./config');
+const logger = require('./logger');
 
 module.exports = {
   username: config.sequelize.username,
@@ -13,5 +14,7 @@ module.exports = {
   define: {
     timestamps: true,
   },
-  logging: config.env === 'development',
+  logging: (log) => {
+    if (config.env === 'development') logger.info(`SQL LOG: ${log}`);
+  },
 };
