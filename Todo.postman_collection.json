@@ -175,7 +175,7 @@
 						"header": [],
 						"body": {
 							"mode": "raw",
-							"raw": "{\r\n    \"email\": \"Erling.Mitchell33@yahoo.com\",\r\n    \"password\": \"testing1234\"\r\n}",
+							"raw": "{\r\n    \"email\": \"Mitchell.Morar@yahoo.com\",\r\n    \"password\": \"testing1234\"\r\n}",
 							"options": {
 								"raw": {
 									"language": "json"
@@ -852,6 +852,15 @@
 						"method": "DELETE",
 						"header": [],
 						"url": "{{BASE_URL}}/todos/7"
+					},
+					"response": []
+				},
+				{
+					"name": "Get similar todos",
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": "{{BASE_URL}}/todos/2/similar-todos"
 					},
 					"response": []
 				}
