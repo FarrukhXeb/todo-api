@@ -1,7 +1,7 @@
 const express = require('express');
 const validate = require('../middlewares/validate');
 const todoValidation = require('../validations/todo.validation');
-const todoController = require('../controllers/todo.controller');
+const { todoController } = require('../controllers');
 const auth = require('../middlewares/auth');
 
 const router = express.Router();
