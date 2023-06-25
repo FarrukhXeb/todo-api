@@ -171,7 +171,7 @@ describe('Todo routes', () => {
   });
 
   describe('DELETE /api/todos/:id', () => {
-    test('should return 401 when deleting a token without authentication', async () => {
+    test('should return 401 when deleting a todo without authentication', async () => {
       await request(app).delete(`/api/todos/${newTodo.id}`).send().expect(httpStatus.UNAUTHORIZED);
     });
 
